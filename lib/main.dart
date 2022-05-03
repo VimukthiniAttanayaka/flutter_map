@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_map/provider/location_provider.dart';
+
 import 'google_map_page.dart';
 
 void main() {
@@ -6,16 +9,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LocationProvider(),
+          child: const GoogleMapPage(),
+        )
+      ],
+      child: const MaterialApp(
+        title: 'Flutter Demo',
+        home: GoogleMapPage(),
       ),
-      home: GoogleMapPage(),
     );
   }
 }
